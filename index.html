@@ -21,115 +21,113 @@
       linear-gradient(150deg, #0d1b47 0%, var(--navy) 45%, #10063a 100%);
     color:var(--white);
     font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    height:100dvh;
-    padding:2.2vh 3vw;
-    gap:1.6vh;
+    display:flex;flex-direction:column;align-items:center;
+    height:100dvh;padding:2vh 3vw;gap:1.4vh;
   }
 
-  header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5vh}
-  header img{height:7vh;width:auto;filter:drop-shadow(0 0 14px rgba(71,205,219,.5))}
-  h1{font-size:clamp(18px,2.5vh,31px);font-weight:700}
+  /* --- Kopf --- */
+  header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.4vh}
+  header img{height:6.5vh;width:auto;filter:drop-shadow(0 0 14px rgba(71,205,219,.5))}
+  h1{font-size:clamp(17px,2.4vh,30px);font-weight:700}
   h1 span{color:var(--cyan)}
-  header p{font-size:clamp(12px,1.7vh,16px);opacity:.85;max-width:70ch}
+  .lead{font-size:clamp(12px,1.8vh,17px);font-weight:700}
+  .lead em{font-style:normal;color:var(--purple);filter:brightness(1.45)}
+  header p.intro{font-size:clamp(11px,1.6vh,15px);opacity:.85;max-width:88ch;line-height:1.4}
 
+  /* --- Hauptbereich --- */
   main{
-    flex:1;min-height:0;width:100%;max-width:1200px;
-    display:flex;align-items:center;justify-content:center;gap:3vw;
+    flex:1;min-height:0;width:100%;max-width:1320px;
+    display:flex;align-items:stretch;justify-content:center;gap:2.5vw;
   }
 
-  /* --- Linke Spalte: Karten-Stapel + Aufzeichnung --- */
-  .left{
-    height:100%;min-width:0;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4vh;
+  .tag{
+    display:inline-block;align-self:flex-start;
+    font-size:clamp(9px,1.3vh,12px);letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+    color:var(--cyan);border:1px solid rgba(71,205,219,.5);border-radius:999px;
+    padding:.35em 1em;background:rgba(71,205,219,.1);
   }
-  .stack{
-    flex:1;min-height:0;
-    display:flex;align-items:center;justify-content:center;
-    padding-left:2.5vw;
-  }
-  .stack img{
-    max-height:100%;width:auto;max-width:26vw;
-    border-radius:16px;
+
+  /* Vergangener Talk */
+  .past{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1vh}
+  .past h2{font-size:clamp(13px,2vh,21px);font-weight:700}
+  .past h2 small{display:block;font-size:.72em;font-weight:400;opacity:.7;margin-top:.2em}
+  .past-grid{flex:1;min-height:0;display:flex;gap:1.6vw;align-items:stretch}
+
+  .poster-wrap{position:relative;height:100%;flex:0 0 auto}
+  .poster-wrap img{
+    height:100%;width:auto;border-radius:14px;
     border:1px solid rgba(255,255,255,.18);
     box-shadow:0 18px 50px rgba(0,0,0,.55);
-    cursor:pointer;
-    transition:transform .3s ease, box-shadow .3s ease;
+    filter:saturate(.8) brightness(.82);
+    transition:filter .3s ease;
   }
-  .stack img:last-child{margin-left:-6vw}
-  .stack img:hover,.stack img.active{
-    transform:translateY(-1.2vh) scale(1.04);
-    box-shadow:0 24px 60px rgba(71,205,219,.35);
-    z-index:5;
+  .poster-wrap:hover img{filter:none}
+  .stamp{
+    position:absolute;top:.9vh;left:.9vh;
+    background:rgba(7,16,48,.85);border:1px solid rgba(255,255,255,.35);
+    border-radius:999px;padding:.3em .9em;
+    font-size:clamp(9px,1.3vh,12px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   }
-  .stack img.active{z-index:6}
 
-  /* --- Rechte Spalte --- */
-  .join{display:flex;flex-direction:column;align-items:center;gap:1.4vh;text-align:center}
-  .join h2{font-size:clamp(15px,2.1vh,24px);color:var(--cyan);font-weight:700}
+  .video-col{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:1.2vh}
+  .video{
+    position:relative;width:100%;aspect-ratio:16/9;max-height:100%;
+    border-radius:14px;overflow:hidden;
+    border:1px solid rgba(71,205,219,.4);
+    box-shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .past p{font-size:clamp(11px,1.6vh,15px);opacity:.88;line-height:1.45}
+  .past p b{color:var(--white)}
+
+  /* Rechte Spalte */
+  .join{
+    flex:0 0 auto;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:1.3vh;text-align:center;
+  }
+  .join h2{font-size:clamp(14px,2vh,22px);color:var(--cyan);font-weight:700}
   .join img{
-    width:min(24vh,210px);border-radius:16px;background:#fff;padding:10px;
+    width:min(21vh,190px);border-radius:16px;background:#fff;padding:9px;
     box-shadow:0 18px 45px rgba(0,0,0,.45);
   }
-
   .next{
     border:1px solid rgba(71,205,219,.35);border-radius:16px;
-    background:rgba(255,255,255,.06);
-    padding:1.2vh 1.6vw;
+    background:rgba(255,255,255,.06);padding:1.1vh 1.4vw;
   }
-  .next .dates{
-    font-size:clamp(14px,2vh,22px);font-weight:700;margin-top:.3vh;
-  }
-  .next .hint{font-size:clamp(11px,1.5vh,14px);opacity:.75;margin-top:.4vh}
-
-  .links{display:flex;flex-direction:column;gap:1vh;align-items:center}
+  .next .dates{font-size:clamp(14px,2vh,22px);font-weight:700;margin-top:.3vh}
+  .next .hint{font-size:clamp(10px,1.4vh,13px);opacity:.75;margin-top:.4vh}
+  .links{display:flex;flex-direction:column;gap:.9vh;align-items:center}
   .btn{
     display:inline-block;background:var(--purple);color:var(--white);text-decoration:none;
-    font-size:clamp(13px,1.9vh,18px);font-weight:700;padding:.8em 1.6em;border-radius:999px;
+    font-size:clamp(12px,1.8vh,17px);font-weight:700;padding:.75em 1.5em;border-radius:999px;
     box-shadow:0 10px 26px rgba(143,73,185,.5);
     transition:background .2s,transform .2s;
   }
   .btn:hover{background:var(--cyan);color:var(--navy);transform:translateY(-2px)}
-  .btn.alt{
-    background:transparent;border:2px solid var(--cyan);color:var(--cyan);
-    box-shadow:none;
-  }
+  .btn.alt{background:transparent;border:2px solid var(--cyan);color:var(--cyan);box-shadow:none}
   .btn.alt:hover{background:var(--cyan);color:var(--navy)}
 
-  .rec{
-    display:inline-flex;align-items:center;gap:.5em;
-    color:var(--white);text-decoration:none;
-    font-size:clamp(12px,1.7vh,16px);font-weight:700;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.22);
-    border-radius:999px;padding:.6em 1.3em;
-    transition:background .2s,transform .2s,border-color .2s;
-  }
-  .rec:hover{background:rgba(71,205,219,.2);border-color:var(--cyan);transform:translateY(-2px)}
-  .rec .play{color:var(--cyan)}
-
+  /* --- Fuß --- */
   footer{
     display:flex;align-items:center;gap:1.4vw;flex-wrap:wrap;justify-content:center;
-    font-size:clamp(11px,1.6vh,15px);opacity:.9;
+    font-size:clamp(11px,1.5vh,14px);opacity:.9;
   }
   footer a{color:var(--cyan);text-decoration:none}
   footer a:hover{text-decoration:underline}
   footer .sep{opacity:.4}
   footer img{
-    height:5vh;width:5vh;border-radius:50%;
-    object-fit:cover;background:var(--white);
-    border:1px solid rgba(255,255,255,.25);
+    height:4.4vh;width:4.4vh;border-radius:50%;object-fit:cover;
+    background:var(--white);border:1px solid rgba(255,255,255,.25);
   }
 
-  @media (max-width:820px){
-    main{flex-direction:column;gap:2vh}
-    .stack{padding-left:0}
-    .stack img{max-height:34vh;max-width:40vw}
-    .stack img:last-child{margin-left:-8vw}
-    .join img{width:18vh}
-    .left{height:auto}
+  @media (max-width:900px){
+    html,body{overflow:auto}
+    body{height:auto;min-height:100dvh}
+    main{flex-direction:column;gap:3vh;align-items:center}
+    .past-grid{flex-direction:column;align-items:center}
+    .poster-wrap{height:auto;max-width:70vw}
+    .poster-wrap img{height:auto;width:100%}
+    .video-col{width:100%}
   }
 </style>
 </head>
@@ -138,21 +136,36 @@
   <header>
     <img src="BPSA-Logo-Background-Removed.png" alt="BPSA Logo">
     <h1>Willkommen bei der <span>Berlin Psychedelic Science Association</span> (BPSA)</h1>
-    <p>Eine studentische Community für Vorträge, Diskussionen und Vernetzung rund um Psychedelika-Forschung.</p>
+    <p class="lead">Du interessierst dich für Psychedelika, Bewusstsein und Wissenschaft? <em>Dann bist du bei uns richtig.</em></p>
+    <p class="intro">Die BPSA bringt Studierende und Interessierte aus unterschiedlichen Fachrichtungen zusammen, um gemeinsam über Psychedelik, Bewusstsein, Wissenschaft, Philosophie und Gesellschaft nachzudenken.</p>
   </header>
 
   <main>
-    <div class="left">
-      <div class="stack">
-        <img src="Design-duo-page-1-v1.png" alt="Über uns: Du interessierst dich für Psychedelika, Bewusstsein und Wissenschaft?">
-        <img src="Design-solo-v1.png" alt="Veranstaltungsplakat: Logos und Ekstase, 08.09.2026" class="active">
-      </div>
-      <a class="rec" href="https://youtu.be/R4pILAsjxWM" target="_blank" rel="noopener">
-        <span class="play">&#9654;</span> Aufzeichnung „Logos und Ekstase" (08.09.2026) ansehen
-      </a>
-    </div>
+    <section class="past">
+      <span class="tag">Vergangener Talk &middot; 08.09.2026</span>
+      <h2>„Logos und Ekstase“
+        <small>Zur Genealogie eines akademischen Tabus — mit Miguel Estéfano Mora Vera</small>
+      </h2>
 
-    <div class="join">
+      <div class="past-grid">
+        <div class="poster-wrap">
+          <img src="Design-solo-v1.png" alt="Plakat des vergangenen Talks „Logos und Ekstase“ am 08.09.2026">
+          <span class="stamp">Vorbei</span>
+        </div>
+
+        <div class="video-col">
+          <div class="video">
+            <iframe src="https://www.youtube-nocookie.com/embed/R4pILAsjxWM"
+                    title="Aufzeichnung: Logos und Ekstase"
+                    loading="lazy" allowfullscreen
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          </div>
+          <p>Am 08.09. sprachen wir über <b>„Logos und Ekstase“</b> – und darüber, was die Geschichte des abendländischen Denkens uns über den Umgang mit außergewöhnlichen Bewusstseinszuständen lehren kann. <b>Die Aufzeichnung gibt es hier.</b></p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="join">
       <div class="next">
         <h2>Nächste Talks</h2>
         <p class="dates">20.10.2026 &middot; 03.11.2026</p>
@@ -165,7 +178,7 @@
         <a class="btn" href="https://chat.whatsapp.com/FjeicaFArV1JHYoMaVckRW?mode=gi_t" target="_blank" rel="noopener">WhatsApp-Gruppe beitreten</a>
         <a class="btn alt" href="https://instagram.com/bpsa.berlin" target="_blank" rel="noopener">Instagram folgen</a>
       </div>
-    </div>
+    </aside>
   </main>
 
   <footer>
@@ -175,14 +188,6 @@
     <span>Kontakt: <a href="mailto:bpsa@psng.info">bpsa@psng.info</a></span>
   </footer>
 
-<script>
-  document.querySelectorAll('.stack img').forEach(function(img){
-    img.addEventListener('click', function(){
-      document.querySelectorAll('.stack img').forEach(function(i){ i.classList.remove('active'); });
-      img.classList.add('active');
-    });
-  });
-</script>
 <script data-goatcounter="https://psng-bpsa.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 </body>
