@@ -97,7 +97,7 @@
 
   .join{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
   .join h3{font-size:clamp(13px,1.8vw,16px);color:var(--cyan);font-weight:700}
-  .join img{width:100%;max-width:190px;border-radius:16px;background:#fff;padding:9px;box-shadow:0 18px 45px rgba(0,0,0,.45)}
+  .join img{width:100%;height:auto;max-width:190px;border-radius:16px;background:#fff;padding:9px;box-shadow:0 18px 45px rgba(0,0,0,.45)}
   .links{display:flex;flex-direction:column;gap:10px;align-items:stretch;width:100%}
   .btn{
     display:inline-block;background:var(--purple);color:var(--white);text-decoration:none;text-align:center;
@@ -112,6 +112,11 @@
   /* --- Vergangene Talks --- */
   .past{display:flex;flex-direction:column;gap:clamp(14px,2.5vw,20px)}
   .talk{display:flex;flex-direction:column;gap:14px}
+  .abstract{display:flex;flex-direction:column;gap:.75em;max-width:78ch}
+  .abstract p{font-size:clamp(12px,1.7vw,15px);line-height:1.6;opacity:.85}
+  .abstract i{opacity:1}
+  .bio p{font-size:clamp(12px,1.7vw,15px);line-height:1.55;opacity:.88}
+  .bio b{color:var(--cyan)}
   .past-grid{display:grid;gap:clamp(16px,2.5vw,28px);grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center}
 
   /* Das Video lädt erst auf Klick: Ein eingebetteter Player meldet jeden
@@ -246,8 +251,15 @@
     <article class="talk">
       <span class="tag">08.09.2026</span>
       <h3 class="talk-title">„Logos und Ekstase“
-        <small>Zur Genealogie eines akademischen Tabus — mit Miguel Estéfano Mora Vera</small>
+        <small>Zur Genealogie eines akademischen Tabus — mit Miguel Estéfano Mora Vera, PhD cand.</small>
       </h3>
+
+      <div class="abstract">
+        <p>Im gegenwärtigen akademischen Diskurs haftet der Beschäftigung mit veränderten Bewusstseinszuständen und psychedelischen Erfahrungen noch immer der Geruch des Illegitimen an. Während die Naturwissenschaften das Phänomen mühsam über eine rein biomedizinische Zweckrationalität rehabilitieren, meidet der geisteswissenschaftliche Habitus das Ekstatische weitgehend – aus Furcht vor dem Bruch mit dem herrschenden, nüchtern-diskursiven Logos.</p>
+        <p>Dieser Vortrag unternimmt eine philosophiegeschichtliche Spurensuche und zeigt, dass dieses Tabu kein zeitloses Kriterium wissenschaftlicher Rationalität ist, sondern das Endprodukt einer zweitausendjährigen Verdrängungsgeschichte:</p>
+        <p>Standen in der griechischen Antike philosophische Erkenntnis und ekstatische Entgrenzung – von den Eleusinischen Mysterien bis zu Platons <i>theia mania</i> – in fruchtbarer Wechselwirkung, so erzwang die Institutionalisierung des Christentums die systematische Kriminalisierung und Ausgrenzung autonomer Transzendenzerfahrungen (von der Häresie-Verurteilung der Mystik bis zum Hexenhammer).</p>
+        <p>Die moderne Universität hat dieses Kontroll- und Abwehrdispositiv weitgehend säkularisiert geerbt. Der Vortrag plädiert dafür, das Psychedelische jenseits von Banalisierung und biomedizinischem Reduktionismus wieder als genuinen Gegenstand der Erkenntnistheorie und Phänomenologie zu begreifen – und skizziert die Notwendigkeit eines interdisziplinären Rahmens, der dem menschlichen Geist in seiner gesamten noetischen Breite gerecht wird.</p>
+      </div>
 
       <div class="past-grid">
         <div class="video">
@@ -257,7 +269,10 @@
             <span class="play"></span>
           </button>
         </div>
-        <p>Am 08.09. sprachen wir über <b>„Logos und Ekstase“</b> – und darüber, was die Geschichte des abendländischen Denkens uns über den Umgang mit außergewöhnlichen Bewusstseinszuständen lehren kann. <b>Die Aufzeichnung gibt es hier</b>, die Bilder vom Abend darunter.</p>
+        <div class="bio">
+          <p><b>Zum Speaker</b><br>Miguel Estéfano Mora Vera ist ein Philosoph, der an der Universität Freiburg promoviert und sich auf das existenzielle Erbe von Kierkegaard, Nietzsche und Heidegger spezialisiert hat. Durch die Synthese westlicher und östlicher Perspektiven eröffnet er neue Einblicke in das Wesen der Realität und das moderne Menschsein. Als aktiver Musiker und Komponist betrachtet er den schöpferischen Prozess zudem als eine wesentliche Erweiterung seines philosophischen Schaffens.</p>
+          <p class="after">Die Aufzeichnung des Abends nebenan, die Bilder darunter.</p>
+        </div>
       </div>
 
       <div class="gallery">
