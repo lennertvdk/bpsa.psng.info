@@ -5,12 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Berlin Psychedelic Science Association</title>
 <meta name="description" content="Die BPSA bringt Studierende und Interessierte zusammen, um über Psychedelika, Bewusstsein und Wissenschaft nachzudenken. Nächster Talk: 20.10.2026 mit Prof. Dr. Timo Torsten Schmidt.">
+<meta name="theme-color" content="#071030">
+<link rel="canonical" href="https://bpsa.psng.info/">
+<!-- Die Seite wird vor allem als Link geteilt – in WhatsApp, auf Instagram.
+     Ohne diese Angaben steht dort eine nackte URL. -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bpsa.psng.info/">
+<meta property="og:title" content="Berlin Psychedelic Science Association">
+<meta property="og:description" content="Nächster Talk: 20.10.2026, Prof. Dr. Timo Torsten Schmidt über die systematische Erforschung veränderter Bewusstseinszustände. HU Berlin und Zoom.">
+<meta property="og:image" content="https://bpsa.psng.info/talk-2026-10-20-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="bpsa-logo.webp" type="image/webp">
 <style>
   :root{
     --navy:#071030;
     --cyan:#47cddb;
     --purple:#8f49b9;
     --white:#ffffff;
+    --panel:rgba(255,255,255,.06);
+    --edge:rgba(255,255,255,.14);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
@@ -26,9 +39,10 @@
   }
   .page{
     max-width:1180px;margin-inline:auto;
-    padding:clamp(20px,4vw,40px) clamp(16px,4vw,32px) clamp(32px,6vw,56px);
-    display:flex;flex-direction:column;gap:clamp(28px,5vw,48px);
+    padding:clamp(20px,4vw,40px) clamp(16px,4vw,32px) clamp(28px,5vw,44px);
+    display:flex;flex-direction:column;gap:clamp(24px,4vw,40px);
   }
+  img{max-width:100%}
 
   /* --- Kopf --- */
   header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -40,6 +54,11 @@
   header p.intro{font-size:clamp(12px,1.7vw,15px);opacity:.85;max-width:80ch;line-height:1.5}
 
   /* --- Bausteine --- */
+  .card{
+    border:1px solid var(--edge);border-radius:20px;
+    background:var(--panel);padding:clamp(18px,3vw,28px);
+  }
+  .card.upcoming{border-color:rgba(71,205,219,.35)}
   .tag{
     display:inline-block;align-self:flex-start;
     font-size:clamp(10px,1.3vw,12px);letter-spacing:.14em;text-transform:uppercase;font-weight:700;
@@ -48,7 +67,7 @@
   }
   .section-title{
     font-size:clamp(11px,1.5vw,13px);letter-spacing:.18em;text-transform:uppercase;
-    font-weight:700;opacity:.65;border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:.6em;
+    font-weight:700;opacity:.65;border-bottom:1px solid var(--edge);padding-bottom:.6em;
   }
   h2.talk-title{font-size:clamp(17px,2.6vw,26px);font-weight:700;line-height:1.3}
   h3.talk-title{font-size:clamp(15px,2.2vw,21px);font-weight:700;line-height:1.3}
@@ -56,17 +75,10 @@
   .card p{font-size:clamp(12px,1.7vw,15px);opacity:.88;line-height:1.5}
   .card p b{color:var(--white);opacity:1}
 
-  .poster{position:relative}
   .poster img{
     display:block;width:100%;height:auto;border-radius:14px;
     border:1px solid rgba(255,255,255,.18);
     box-shadow:0 18px 50px rgba(0,0,0,.55);
-  }
-  .stamp{
-    position:absolute;top:12px;left:12px;
-    background:rgba(7,16,48,.85);border:1px solid rgba(255,255,255,.35);
-    border-radius:999px;padding:.3em .9em;
-    font-size:clamp(9px,1.2vw,12px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   }
 
   /* --- Nächster Talk --- */
@@ -74,8 +86,6 @@
     display:grid;gap:clamp(18px,3vw,34px);
     grid-template-columns:minmax(0,300px) minmax(0,1fr) minmax(0,210px);
     align-items:start;
-    border:1px solid rgba(71,205,219,.35);border-radius:20px;
-    background:rgba(255,255,255,.06);padding:clamp(18px,3vw,28px);
   }
   .upcoming .info{display:flex;flex-direction:column;gap:12px;min-width:0}
   .upcoming .info a{color:var(--cyan)}
@@ -100,16 +110,41 @@
   .btn.alt:hover{background:var(--cyan);color:var(--navy)}
 
   /* --- Vergangene Talks --- */
-  .past{display:flex;flex-direction:column;gap:clamp(14px,2.5vw,22px)}
+  .past{display:flex;flex-direction:column;gap:clamp(14px,2.5vw,20px)}
   .talk{display:flex;flex-direction:column;gap:14px}
   .past-grid{display:grid;gap:clamp(16px,2.5vw,28px);grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center}
+
+  /* Das Video lädt erst auf Klick: Ein eingebetteter Player meldet jeden
+     Seitenaufruf an Google, bevor überhaupt jemand abspielen wollte. Das
+     Standbild liegt deshalb hier im Repo. */
   .video{
     position:relative;width:100%;aspect-ratio:16/9;
     border-radius:14px;overflow:hidden;
     border:1px solid rgba(71,205,219,.4);
     box-shadow:0 18px 50px rgba(0,0,0,.55);
+    background:#000;
   }
   .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .facade{
+    position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;cursor:pointer;
+    background:none;display:grid;place-items:center;
+  }
+  .facade img{width:100%;height:100%;object-fit:cover;transition:opacity .25s,transform .35s}
+  .facade:hover img{opacity:.75;transform:scale(1.02)}
+  .facade .play{
+    position:absolute;width:clamp(48px,7vw,66px);aspect-ratio:1;border-radius:50%;
+    background:rgba(7,16,48,.72);border:2px solid var(--cyan);
+    display:grid;place-items:center;transition:background .2s,transform .2s;
+  }
+  .facade .play::before{
+    content:"";width:0;height:0;margin-left:4px;
+    border-left:clamp(14px,2vw,19px) solid var(--cyan);
+    border-top:clamp(9px,1.3vw,12px) solid transparent;
+    border-bottom:clamp(9px,1.3vw,12px) solid transparent;
+  }
+  .facade:hover .play{background:var(--cyan);transform:scale(1.06)}
+  .facade:hover .play::before{border-left-color:var(--navy)}
+  .facade:focus-visible{outline:3px solid var(--cyan);outline-offset:-3px}
 
   /* Fotostrecke: eine Reihe zum Wischen, die an den Bildkanten einrastet. */
   .gallery{position:relative;display:flex;align-items:center;gap:8px}
@@ -121,7 +156,7 @@
   .strip li{flex:0 0 auto;scroll-snap-align:start}
   .strip img{
     display:block;height:clamp(150px,22vw,230px);width:auto;border-radius:12px;
-    border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.45);
+    border:1px solid var(--edge);box-shadow:0 10px 30px rgba(0,0,0,.45);
   }
   .nav{
     flex:0 0 auto;width:38px;height:38px;border-radius:50%;cursor:pointer;
@@ -129,16 +164,29 @@
     font-size:20px;line-height:1;transition:background .2s,color .2s;
   }
   .nav:hover{background:var(--cyan);color:var(--navy)}
+  .nav:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 
   /* --- Fuß --- */
   footer{
-    display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;
-    font-size:clamp(11px,1.5vw,14px);opacity:.9;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;
+    border:1px solid var(--edge);border-radius:20px;
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+    padding:clamp(18px,3vw,26px);
+    display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;
+  }
+  .recruit{
+    font-size:clamp(12px,1.8vw,16px);line-height:1.5;max-width:70ch;
+  }
+  .recruit b{color:var(--cyan)}
+  .recruit a{color:var(--white);font-weight:700}
+  .meta{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;
+    font-size:clamp(11px,1.5vw,14px);opacity:.9;
+    border-top:1px solid var(--edge);padding-top:14px;width:100%;
   }
   footer a{color:var(--cyan);text-decoration:none}
   footer a:hover{text-decoration:underline}
-  footer .sep{opacity:.4}
-  footer img{height:34px;width:34px;border-radius:50%;object-fit:cover;background:var(--white);border:1px solid rgba(255,255,255,.25)}
+  .meta .sep{opacity:.4}
+  .meta img{height:34px;width:34px;border-radius:50%;object-fit:cover;background:var(--white);border:1px solid rgba(255,255,255,.25)}
 
   @media (max-width:900px){
     .upcoming{grid-template-columns:minmax(0,1fr)}
@@ -147,13 +195,16 @@
     .join{max-width:360px;margin-inline:auto}
     .nav{display:none}
   }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;scroll-behavior:auto !important}
+  }
 </style>
 </head>
 <body>
 <div class="page">
 
   <header>
-    <img src="BPSA-Logo-Background-Removed.png" alt="BPSA Logo">
+    <img src="bpsa-logo.webp" width="220" height="220" alt="BPSA Logo" fetchpriority="high">
     <h1>Willkommen bei der <span>Berlin Psychedelic Science Association</span> (BPSA)</h1>
     <p class="lead">Du interessierst dich für Psychedelika, Bewusstsein und Wissenschaft? <em>Dann bist du bei uns richtig.</em></p>
     <p class="intro">Die BPSA bringt Studierende und Interessierte aus unterschiedlichen Fachrichtungen zusammen, um gemeinsam über Psychedelik, Bewusstsein, Wissenschaft, Philosophie und Gesellschaft nachzudenken.</p>
@@ -161,8 +212,8 @@
 
   <section class="card upcoming">
     <div class="poster">
-      <img src="talk-2026-10-20-poster.jpg" alt="Plakat zum Talk „The Systematic Scientific Study of Altered States of Consciousness“ mit Prof. Dr. Timo T. Schmidt am 20.10.2026">
-      <span class="stamp">Nächster Talk</span>
+      <img src="talk-2026-10-20-poster.jpg" width="880" height="1100" decoding="async"
+           alt="Plakat zum Talk „The Systematic Scientific Study of Altered States of Consciousness“ mit Prof. Dr. Timo T. Schmidt am 20.10.2026">
     </div>
 
     <div class="info">
@@ -181,7 +232,7 @@
 
     <aside class="join">
       <h3>Zoom-Link via WhatsApp</h3>
-      <img src="Whatsapp-QR-code-BPSA-chat.png" alt="WhatsApp QR-Code zur BPSA-Gruppe">
+      <img src="whatsapp-qr.webp" width="420" height="420" decoding="async" alt="WhatsApp QR-Code zur BPSA-Gruppe">
       <div class="links">
         <a class="btn" href="https://chat.whatsapp.com/FjeicaFArV1JHYoMaVckRW?mode=gi_t" target="_blank" rel="noopener">WhatsApp-Gruppe beitreten</a>
         <a class="btn alt" href="https://instagram.com/bpsa.berlin" target="_blank" rel="noopener">Instagram folgen</a>
@@ -189,7 +240,7 @@
     </aside>
   </section>
 
-  <section class="past card">
+  <section class="card past">
     <h2 class="section-title">Vergangene Talks</h2>
 
     <article class="talk">
@@ -200,10 +251,11 @@
 
       <div class="past-grid">
         <div class="video">
-          <iframe src="https://www.youtube-nocookie.com/embed/R4pILAsjxWM"
-                  title="Aufzeichnung: Logos und Ekstase"
-                  loading="lazy" allowfullscreen
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          <button class="facade" type="button" data-embed="https://www.youtube-nocookie.com/embed/R4pILAsjxWM?autoplay=1&amp;rel=0"
+                  aria-label="Aufzeichnung abspielen: Logos und Ekstase">
+            <img src="yt-logos-und-ekstase.webp" width="960" height="540" loading="lazy" decoding="async" alt="">
+            <span class="play"></span>
+          </button>
         </div>
         <p>Am 08.09. sprachen wir über <b>„Logos und Ekstase“</b> – und darüber, was die Geschichte des abendländischen Denkens uns über den Umgang mit außergewöhnlichen Bewusstseinszuständen lehren kann. <b>Die Aufzeichnung gibt es hier</b>, die Bilder vom Abend darunter.</p>
       </div>
@@ -211,20 +263,15 @@
       <div class="gallery">
         <button class="nav" type="button" data-dir="-1" aria-label="Fotos zurück">&lsaquo;</button>
         <ul class="strip">
-          <li><img src="miguel/photo-01.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (1 von 14)"></li>
-          <li><img src="miguel/photo-02.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (2 von 14)"></li>
-          <li><img src="miguel/photo-03.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (3 von 14)"></li>
-          <li><img src="miguel/photo-04.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (4 von 14)"></li>
-          <li><img src="miguel/photo-05.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (5 von 14)"></li>
-          <li><img src="miguel/photo-06.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (6 von 14)"></li>
-          <li><img src="miguel/photo-07.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (7 von 14)"></li>
-          <li><img src="miguel/photo-08.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (8 von 14)"></li>
-          <li><img src="miguel/photo-09.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (9 von 14)"></li>
-          <li><img src="miguel/photo-10.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (10 von 14)"></li>
-          <li><img src="miguel/photo-11.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (11 von 14)"></li>
-          <li><img src="miguel/photo-12.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (12 von 14)"></li>
-          <li><img src="miguel/photo-13.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (13 von 14)"></li>
-          <li><img src="miguel/photo-14.jpg" loading="lazy" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (14 von 14)"></li>
+          <li><img src="miguel/photo-01.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (1 von 9)"></li>
+          <li><img src="miguel/photo-02.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (2 von 9)"></li>
+          <li><img src="miguel/photo-03.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (3 von 9)"></li>
+          <li><img src="miguel/photo-04.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (4 von 9)"></li>
+          <li><img src="miguel/photo-05.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (5 von 9)"></li>
+          <li><img src="miguel/photo-06.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (6 von 9)"></li>
+          <li><img src="miguel/photo-07.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (7 von 9)"></li>
+          <li><img src="miguel/photo-08.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (8 von 9)"></li>
+          <li><img src="miguel/photo-09.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (9 von 9)"></li>
         </ul>
         <button class="nav" type="button" data-dir="1" aria-label="Weitere Fotos">&rsaquo;</button>
       </div>
@@ -232,10 +279,13 @@
   </section>
 
   <footer>
-    <img src="psng-logo-v1-white-extended.png" alt="PSNG Logo">
-    <span>Teil des <a href="https://psng.info" target="_blank" rel="noopener">Psychedelic Student Network Germany</a></span>
-    <span class="sep">·</span>
-    <span>Kontakt: <a href="mailto:bpsa@psng.info">bpsa@psng.info</a></span>
+    <p class="recruit"><b>Wir suchen Mitglieder.</b> Du willst nicht nur zuhören, sondern mitmachen – Talks organisieren, moderieren, Social Media, oder selbst einen Vortrag halten? Schreib uns an <a href="mailto:bpsa@psng.info?subject=Mitmachen%20bei%20der%20BPSA">bpsa@psng.info</a>. Vorwissen brauchst du keins, Lust genügt.</p>
+    <div class="meta">
+      <img src="psng-logo.webp" width="96" height="96" loading="lazy" decoding="async" alt="PSNG Logo">
+      <span>Teil des <a href="https://psng.info" target="_blank" rel="noopener">Psychedelic Student Network Germany</a></span>
+      <span class="sep">·</span>
+      <span>Kontakt: <a href="mailto:bpsa@psng.info">bpsa@psng.info</a></span>
+    </div>
   </footer>
 
 </div>
@@ -249,6 +299,18 @@
       button.addEventListener("click", function () {
         strip.scrollBy({ left: Number(button.dataset.dir) * strip.clientWidth * 0.8, behavior: "smooth" });
       });
+    });
+  });
+
+  // Erst der Klick holt den Player – und damit erst der Klick Google.
+  document.querySelectorAll(".facade").forEach(function (facade) {
+    facade.addEventListener("click", function () {
+      var frame = document.createElement("iframe");
+      frame.src = facade.dataset.embed;
+      frame.title = "Aufzeichnung: Logos und Ekstase";
+      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      frame.allowFullscreen = true;
+      facade.replaceWith(frame);
     });
   });
 </script>
