@@ -135,7 +135,10 @@
   .abstract i{opacity:1}
   .bio p{font-size:clamp(12px,1.7vw,15px);line-height:1.55;opacity:.88}
   .bio b{color:var(--cyan)}
-  .past-grid{display:grid;gap:clamp(16px,2.5vw,28px);grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center}
+  .talk-head{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+  .who{font-size:clamp(12px,1.7vw,15px);opacity:.8}
+  .talk .video{max-width:900px;width:100%}
+  .recap{max-width:78ch}
 
   /* Das Video lädt erst auf Klick: Ein eingebetteter Player meldet jeden
      Seitenaufruf an Google, bevor überhaupt jemand abspielen wollte. Das
@@ -185,7 +188,7 @@
   .shot{padding:0;border:0;background:none;cursor:zoom-in;display:block;border-radius:12px}
 
   .lightbox{
-    border:0;padding:0;background:none;max-width:96vw;max-height:96vh;
+    border:0;padding:0;background:none;margin:auto;max-width:96vw;max-height:96vh;
     overflow:visible;color:var(--white);
   }
   .lightbox::backdrop{background:rgba(4,8,24,.92)}
@@ -199,6 +202,7 @@
     font-size:24px;line-height:1;transition:background .2s,color .2s;
   }
   .lb:hover{background:var(--cyan);color:var(--navy)}
+  .lb[hidden]{display:none}
   .lb-prev{left:-12px;top:50%;transform:translateY(-50%)}
   .lb-next{right:-12px;top:50%;transform:translateY(-50%)}
   .lb-close{right:-12px;top:-14px;font-size:22px}
@@ -208,25 +212,22 @@
     .lb-close{right:6px;top:-52px}
   }
 
-  /* Fotostrecke: eine Reihe zum Wischen, die an den Bildkanten einrastet. */
-  .gallery{position:relative;display:flex;align-items:center;gap:8px}
-  .strip{
-    list-style:none;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
-    scroll-behavior:smooth;padding-bottom:8px;scrollbar-width:thin;
-    scrollbar-color:rgba(71,205,219,.5) transparent;
+  /* Die Fotos des Abends als vollständiges Raster: Wer einen Rückblick
+     aufmacht, will sehen, wie es war – nicht sich durch eine Reihe schieben,
+     die rechts abgeschnitten ist. Neun Bilder, drei mal drei. */
+  .shots{
+    list-style:none;display:grid;gap:10px;
+    grid-template-columns:repeat(3,minmax(0,1fr));
   }
-  .strip li{flex:0 0 auto;scroll-snap-align:start}
-  .strip img{
-    display:block;height:clamp(150px,22vw,230px);width:auto;border-radius:12px;
-    border:1px solid var(--edge);box-shadow:0 10px 30px rgba(0,0,0,.45);
+  .shot{padding:0;border:0;background:none;cursor:zoom-in;display:block;width:100%;border-radius:12px}
+  .shots .shot img{
+    width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;
+    border-radius:12px;border:1px solid var(--edge);
+    transition:transform .25s,box-shadow .25s;
   }
-  .nav{
-    flex:0 0 auto;width:38px;height:38px;border-radius:50%;cursor:pointer;
-    border:1px solid rgba(71,205,219,.5);background:rgba(7,16,48,.7);color:var(--cyan);
-    font-size:20px;line-height:1;transition:background .2s,color .2s;
-  }
-  .nav:hover{background:var(--cyan);color:var(--navy)}
-  .nav:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+  .shots .shot:hover img{transform:scale(1.015);box-shadow:0 14px 34px rgba(0,0,0,.5)}
+  .poster .shot img{transition:transform .25s}
+  .poster .shot:hover img{transform:scale(1.01)}
 
   /* --- Fuß --- */
   footer{
@@ -254,9 +255,8 @@
   @media (max-width:900px){
     .upcoming{grid-template-columns:minmax(0,1fr)}
     .upcoming .poster{max-width:360px;margin-inline:auto}
-    .past-grid{grid-template-columns:minmax(0,1fr)}
     .join{max-width:360px;margin-inline:auto}
-    .nav{display:none}
+    .shots{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media (prefers-reduced-motion:reduce){
     *{transition:none !important;scroll-behavior:auto !important}
@@ -297,9 +297,11 @@
   <section class="card upcoming" aria-labelledby="naechster-talk">
     <h2 class="section-title" id="naechster-talk">Nächster Talk</h2>
 
-    <div class="poster">
-      <img src="talk-2026-10-20-poster.jpg" width="880" height="1100" decoding="async"
-           alt="Plakat zum Talk „The Systematic Scientific Study of Altered States of Consciousness“ mit Prof. Dr. Timo T. Schmidt am 20.10.2026">
+    <div class="poster" data-gallery="plakat">
+      <button class="shot" type="button" aria-label="Plakat vergrößern">
+        <img src="talk-2026-10-20-poster.jpg" width="880" height="1100" decoding="async"
+             alt="Plakat zum Talk „The Systematic Scientific Study of Altered States of Consciousness“ mit Prof. Dr. Timo T. Schmidt am 20.10.2026">
+      </button>
     </div>
 
     <div class="info">
@@ -343,37 +345,37 @@
     <h2 class="section-title" id="vergangene-talks">Vergangene Talks</h2>
 
     <article class="talk">
-      <span class="tag">08.09.2026</span>
-      <h3 class="talk-title">„Logos und Ekstase“
-        <small>Zur Genealogie eines akademischen Tabus — mit Miguel Estéfano Mora Vera, PhD cand.</small>
-      </h3>
-
-      <div class="past-grid">
-        <div class="video">
-          <button class="facade" type="button" data-embed="https://www.youtube-nocookie.com/embed/R4pILAsjxWM?autoplay=1&amp;rel=0"
-                  aria-label="Aufzeichnung abspielen: Logos und Ekstase">
-            <img src="yt-logos-und-ekstase.webp" width="960" height="540" loading="lazy" decoding="async" alt="">
-            <span class="play"></span>
-          </button>
-        </div>
-        <div class="recap">
-          <p>Miguel zeichnete nach, wie aus dem Ekstatischen ein akademisches Tabu wurde – von den Eleusinischen Mysterien und Platons <i>theia mania</i> über die Häresieprozesse bis in den Habitus der heutigen Universität. Aufzeichnung und Bilder des Abends:</p>
-          <details>
-            <summary>Abstract und Kurzvita</summary>
-            <div class="abstract">
-              <p>Im gegenwärtigen akademischen Diskurs haftet der Beschäftigung mit veränderten Bewusstseinszuständen und psychedelischen Erfahrungen noch immer der Geruch des Illegitimen an. Während die Naturwissenschaften das Phänomen mühsam über eine rein biomedizinische Zweckrationalität rehabilitieren, meidet der geisteswissenschaftliche Habitus das Ekstatische weitgehend – aus Furcht vor dem Bruch mit dem herrschenden, nüchtern-diskursiven Logos.</p>
-              <p>Dieser Vortrag unternimmt eine philosophiegeschichtliche Spurensuche und zeigt, dass dieses Tabu kein zeitloses Kriterium wissenschaftlicher Rationalität ist, sondern das Endprodukt einer zweitausendjährigen Verdrängungsgeschichte:</p>
-              <p>Standen in der griechischen Antike philosophische Erkenntnis und ekstatische Entgrenzung – von den Eleusinischen Mysterien bis zu Platons <i>theia mania</i> – in fruchtbarer Wechselwirkung, so erzwang die Institutionalisierung des Christentums die systematische Kriminalisierung und Ausgrenzung autonomer Transzendenzerfahrungen (von der Häresie-Verurteilung der Mystik bis zum Hexenhammer).</p>
-              <p>Die moderne Universität hat dieses Kontroll- und Abwehrdispositiv weitgehend säkularisiert geerbt. Der Vortrag plädiert dafür, das Psychedelische jenseits von Banalisierung und biomedizinischem Reduktionismus wieder als genuinen Gegenstand der Erkenntnistheorie und Phänomenologie zu begreifen – und skizziert die Notwendigkeit eines interdisziplinären Rahmens, der dem menschlichen Geist in seiner gesamten noetischen Breite gerecht wird.</p>
-              <p class="bio-line"><b>Zum Speaker:</b> Miguel Estéfano Mora Vera ist ein Philosoph, der an der Universität Freiburg promoviert und sich auf das existenzielle Erbe von Kierkegaard, Nietzsche und Heidegger spezialisiert hat. Durch die Synthese westlicher und östlicher Perspektiven eröffnet er neue Einblicke in das Wesen der Realität und das moderne Menschsein. Als aktiver Musiker und Komponist betrachtet er den schöpferischen Prozess zudem als eine wesentliche Erweiterung seines philosophischen Schaffens.</p>
-            </div>
-          </details>
-        </div>
+      <div class="talk-head">
+        <span class="tag">08.09.2026</span>
+        <h3 class="talk-title lg">„Logos und Ekstase“
+          <small>Zur Genealogie eines akademischen Tabus</small>
+        </h3>
+        <p class="who">mit Miguel Estéfano Mora Vera, PhD cand. · Philosophie, Universität Freiburg</p>
       </div>
 
-      <div class="gallery">
-        <button class="nav" type="button" data-dir="-1" aria-label="Fotos zurück">&lsaquo;</button>
-        <ul class="strip">
+      <div class="video">
+        <button class="facade" type="button" data-embed="https://www.youtube-nocookie.com/embed/R4pILAsjxWM?autoplay=1&amp;rel=0"
+              aria-label="Aufzeichnung abspielen: Logos und Ekstase">
+          <img src="yt-logos-und-ekstase.webp" width="960" height="540" loading="lazy" decoding="async" alt="">
+          <span class="play"></span>
+        </button>
+      </div>
+
+      <div class="recap">
+        <p>Miguel zeichnete nach, wie aus dem Ekstatischen ein akademisches Tabu wurde – von den Eleusinischen Mysterien und Platons <i>theia mania</i> über die Häresieprozesse bis in den Habitus der heutigen Universität. Aufzeichnung und Bilder des Abends:</p>
+        <details>
+          <summary>Abstract und Kurzvita</summary>
+          <div class="abstract">
+            <p>Im gegenwärtigen akademischen Diskurs haftet der Beschäftigung mit veränderten Bewusstseinszuständen und psychedelischen Erfahrungen noch immer der Geruch des Illegitimen an. Während die Naturwissenschaften das Phänomen mühsam über eine rein biomedizinische Zweckrationalität rehabilitieren, meidet der geisteswissenschaftliche Habitus das Ekstatische weitgehend – aus Furcht vor dem Bruch mit dem herrschenden, nüchtern-diskursiven Logos.</p>
+            <p>Dieser Vortrag unternimmt eine philosophiegeschichtliche Spurensuche und zeigt, dass dieses Tabu kein zeitloses Kriterium wissenschaftlicher Rationalität ist, sondern das Endprodukt einer zweitausendjährigen Verdrängungsgeschichte:</p>
+            <p>Standen in der griechischen Antike philosophische Erkenntnis und ekstatische Entgrenzung – von den Eleusinischen Mysterien bis zu Platons <i>theia mania</i> – in fruchtbarer Wechselwirkung, so erzwang die Institutionalisierung des Christentums die systematische Kriminalisierung und Ausgrenzung autonomer Transzendenzerfahrungen (von der Häresie-Verurteilung der Mystik bis zum Hexenhammer).</p>
+            <p>Die moderne Universität hat dieses Kontroll- und Abwehrdispositiv weitgehend säkularisiert geerbt. Der Vortrag plädiert dafür, das Psychedelische jenseits von Banalisierung und biomedizinischem Reduktionismus wieder als genuinen Gegenstand der Erkenntnistheorie und Phänomenologie zu begreifen – und skizziert die Notwendigkeit eines interdisziplinären Rahmens, der dem menschlichen Geist in seiner gesamten noetischen Breite gerecht wird.</p>
+            <p class="bio-line"><b>Zum Speaker:</b> Miguel Estéfano Mora Vera ist ein Philosoph, der an der Universität Freiburg promoviert und sich auf das existenzielle Erbe von Kierkegaard, Nietzsche und Heidegger spezialisiert hat. Durch die Synthese westlicher und östlicher Perspektiven eröffnet er neue Einblicke in das Wesen der Realität und das moderne Menschsein. Als aktiver Musiker und Komponist betrachtet er den schöpferischen Prozess zudem als eine wesentliche Erweiterung seines philosophischen Schaffens.</p>
+          </div>
+        </details>
+      </div>
+
+      <ul class="shots" data-gallery="abend">
           <li><button class="shot" type="button" aria-label="Foto 1 vergrößern"><img src="miguel/photo-01.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (1 von 9)"></button></li>
           <li><button class="shot" type="button" aria-label="Foto 2 vergrößern"><img src="miguel/photo-02.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (2 von 9)"></button></li>
           <li><button class="shot" type="button" aria-label="Foto 3 vergrößern"><img src="miguel/photo-03.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (3 von 9)"></button></li>
@@ -383,9 +385,7 @@
           <li><button class="shot" type="button" aria-label="Foto 7 vergrößern"><img src="miguel/photo-07.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (7 von 9)"></button></li>
           <li><button class="shot" type="button" aria-label="Foto 8 vergrößern"><img src="miguel/photo-08.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (8 von 9)"></button></li>
           <li><button class="shot" type="button" aria-label="Foto 9 vergrößern"><img src="miguel/photo-09.jpg" width="1000" height="666" loading="lazy" decoding="async" alt="Foto vom Talk „Logos und Ekstase“ am 08.09.2026 (9 von 9)"></button></li>
-        </ul>
-        <button class="nav" type="button" data-dir="1" aria-label="Weitere Fotos">&rsaquo;</button>
-      </div>
+      </ul>
     </article>
   </section>
   </main>
@@ -411,17 +411,6 @@
 </div>
 
 <script>
-  // Die Pfeile schieben die Fotoreihe um knapp eine Breite weiter; gewischt
-  // wird sie ohnehin von selbst, die Knöpfe sind für Maus und Tastatur.
-  document.querySelectorAll(".gallery").forEach(function (gallery) {
-    var strip = gallery.querySelector(".strip");
-    gallery.querySelectorAll(".nav").forEach(function (button) {
-      button.addEventListener("click", function () {
-        strip.scrollBy({ left: Number(button.dataset.dir) * strip.clientWidth * 0.8, behavior: "smooth" });
-      });
-    });
-  });
-
   // Erst der Klick holt den Player – und damit erst der Klick Google.
   document.querySelectorAll(".facade").forEach(function (facade) {
     facade.addEventListener("click", function () {
@@ -545,42 +534,51 @@
     });
   })();
 
-  // Foto groß: ein <dialog> übernimmt Hintergrund, Escape und Fokusfalle,
-  // hier bleibt das Blättern.
+  // Bild groß: ein <dialog> übernimmt Hintergrund, Escape und Fokusfalle,
+  // hier bleiben Gruppen und Blättern. Jede Gruppe (die Fotos eines Abends,
+  // ein Plakat für sich) blättert nur in sich selbst.
   (function () {
     var box = document.querySelector(".lightbox");
     if (!box || !box.showModal) return;
     var view = box.querySelector("img");
-    var shots = [].slice.call(document.querySelectorAll(".shot"));
+    var prev = box.querySelector(".lb-prev");
+    var next = box.querySelector(".lb-next");
+    var group = [];
     var at = 0;
 
     function show(index) {
-      at = (index + shots.length) % shots.length;
-      var source = shots[at].querySelector("img");
+      at = (index + group.length) % group.length;
+      var source = group[at].querySelector("img");
       view.src = source.currentSrc || source.src;
       view.alt = source.alt;
     }
 
-    shots.forEach(function (shot, index) {
+    document.querySelectorAll(".shot").forEach(function (shot) {
       shot.addEventListener("click", function () {
-        show(index);
+        var holder = shot.closest("[data-gallery]") || shot.parentElement;
+        group = [].slice.call(holder.querySelectorAll(".shot"));
+        var alone = group.length < 2;
+        prev.hidden = alone;
+        next.hidden = alone;
+        show(group.indexOf(shot));
         box.showModal();
       });
     });
 
-    box.querySelector(".lb-prev").addEventListener("click", function () { show(at - 1); });
-    box.querySelector(".lb-next").addEventListener("click", function () { show(at + 1); });
+    prev.addEventListener("click", function () { show(at - 1); });
+    next.addEventListener("click", function () { show(at + 1); });
     box.querySelector(".lb-close").addEventListener("click", function () { box.close(); });
     box.addEventListener("keydown", function (e) {
+      if (group.length < 2) return;
       if (e.key === "ArrowLeft") { e.preventDefault(); show(at - 1); }
       if (e.key === "ArrowRight") { e.preventDefault(); show(at + 1); }
     });
     // Klick neben das Bild schließt – der Dialog selbst ist die Fläche drumherum.
     box.addEventListener("click", function (e) { if (e.target === box) box.close(); });
-    // Beim Schließen die Quelle freigeben, sonst hält der Dialog das größte
-    // Bild der Seite im Speicher.
+    // Beim Schließen die Quelle freigeben, sonst hängt das größte Bild der
+    // Seite dauerhaft im Speicher.
     box.addEventListener("close", function () {
-      shots[at].focus();
+      if (group[at]) group[at].focus();
       view.removeAttribute("src");
     });
   })();
